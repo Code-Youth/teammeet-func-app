@@ -6,8 +6,8 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": ["get"],
-      "route": "recipes"
+      "methods": ["post"],
+      "route": "games"
     },
     {
       "type": "http",

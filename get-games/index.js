@@ -1,35 +1,28 @@
 const MongoClient = require('mongodb').MongoClient;
-const auth = {
-  user: process.env.user,
-  password: process.env.password
-};
+
 let db = null;
 const loadDB = async () => {
   if (db) {
     return db;
   }
-  const client = await MongoClient.connect(
-    `mongodb://${process.env.user}.documents.azure.com:${
-      process.env.port
-    }/?ssl=true`,
-    {
-      auth: auth
-    }
-  );
-  db = client.db('admin');
+  const client = await MongoClient.connect(process.env.cs);
+
+  db = client.db('teammeet');
   return db;
 };
 
 module.exports = async function(context) {
   try {
     const database = await loadDB();
-    let recipes = await database
-      .collection('Recipes')
+    let games = await database
+      .collection('games')
       .find()
-      .toArray();
+      .toArray()
+
     context.res = {
-      body: { items: recipes }
+      body: { games: games }
     };
+
   } catch (error) {
     context.log(`Error code: ${error.code} message: ${error.message}`);
     context.res = {
