@@ -24,7 +24,7 @@ const loadDB = async () => {
 
 module.exports = async function(context, req) {
   //req contains all the info about the call
-  //context.log(req)
+  context.log(req)
 
   //req.query contains all the query parameters
   //context.log(req.query)
@@ -43,6 +43,9 @@ module.exports = async function(context, req) {
     // if sport is passes, use as filter
     if (req.query.sport)
       query.sport = req.query.sport
+
+    if (req.query.firsName)
+      query.firsName = req.query.firsName
 
     // if sport is passes, use as filter
     if (req.query.location)
