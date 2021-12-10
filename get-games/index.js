@@ -1,3 +1,4 @@
+
 // imports the database package
 const Mongo = require('./../utils/mongo.js');
 
@@ -6,7 +7,7 @@ const Mongo = require('./../utils/mongo.js');
 module.exports = async function(context, req) {
   //req contains all the info about the call
   //context.log(req)
-
+  context.log(req)
   try {
     // loadDB returns a MongoClient initialized to our database
     const database = await Mongo.loadDB();
@@ -22,9 +23,29 @@ module.exports = async function(context, req) {
     if (req.query.location)
       query.location = req.query.location
 
+      if(req.query.numPlayers){
+        query.numPlayers = parseInt(req.query.numPlayers)
+      context.log(query)
+      }
+      if(req.query.startDate && req.query.endDate){
+        let startDate = new Date(req.query.startDate)
+        let endDate = new Date(req.query.endDate)
+        query.date = {$gte:startDate,$lte:endDate}
+      }
+
+     else if(req.query.startDate){
+        let startDate=new Date(req.query.startDate)
+       query.date = {$gte:startDate}
+      }
+
+      else if(req.query.endDate){
+        let endDate=new Date(req.query.endDate)
+       query.date = {$lte:endDate}
+      }
     // if sport is passes, use as filter
     if (req.query._id)
       query._id = req.query._id
+
     
     //print query object for us to look at
     context.log("the query passed to mongo is: " + JSON.stringify(query))
