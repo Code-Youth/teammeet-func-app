@@ -32,16 +32,17 @@ module.exports = async function(context, req) {
         let endDate = new Date(req.query.endDate)
         query.date = {$gte:startDate,$lte:endDate}
       }
-
+// ?startDate=yyyy-mm-dd&endDate=yyyy-mm-dd
      else if(req.query.startDate){
         let startDate=new Date(req.query.startDate)
        query.date = {$gte:startDate}
       }
-
+//  ?startDate=yyyy-mm-dd
       else if(req.query.endDate){
         let endDate=new Date(req.query.endDate)
        query.date = {$lte:endDate}
       }
+//  ?endDate=yyyy-mm-dd
     // if sport is passes, use as filter
     if (req.query._id)
       query._id = req.query._id
