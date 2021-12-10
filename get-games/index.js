@@ -6,8 +6,6 @@ const Mongo = require('./../utils/mongo.js');
 
 module.exports = async function(context, req) {
   //req contains all the info about the call
-  //context.log(req)
-  context.log(req)
   try {
     // loadDB returns a MongoClient initialized to our database
     const database = await Mongo.loadDB();
@@ -18,6 +16,9 @@ module.exports = async function(context, req) {
     // if sport is passes, use as filter
     if (req.query.sport)
       query.sport = req.query.sport
+
+    if (req.query.firsName)
+      query.firsName = req.query.firsName
 
     // if sport is passes, use as filter
     if (req.query.location)
