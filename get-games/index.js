@@ -42,6 +42,9 @@ module.exports = async function(context, req) {
         let endDate=new Date(req.query.endDate)
        query.date = {$lte:endDate}
       }
+
+      if(req.query.sklLevel)
+      query.sklLevel= req.query.sklLevel
 //  ?endDate=yyyy-mm-dd
     // if sport is passes, use as filter
     if (req.query._id)
