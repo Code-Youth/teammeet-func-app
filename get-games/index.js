@@ -6,6 +6,8 @@ const Mongo = require('./../utils/mongo.js');
 
 module.exports = async function(context, req) {
   //req contains all the info about the call
+  //context.log(req)
+  context.log(req)
   try {
     // loadDB returns a MongoClient initialized to our database
     const database = await Mongo.loadDB();
@@ -16,9 +18,6 @@ module.exports = async function(context, req) {
     // if sport is passes, use as filter
     if (req.query.sport)
       query.sport = req.query.sport
-
-    if (req.query.firsName)
-      query.firsName = req.query.firsName
 
     // if sport is passes, use as filter
     if (req.query.location)
@@ -33,16 +32,20 @@ module.exports = async function(context, req) {
         let endDate = new Date(req.query.endDate)
         query.date = {$gte:startDate,$lte:endDate}
       }
-
+// ?startDate=yyyy-mm-dd&endDate=yyyy-mm-dd
      else if(req.query.startDate){
         let startDate=new Date(req.query.startDate)
        query.date = {$gte:startDate}
       }
-
+//  ?startDate=yyyy-mm-dd
       else if(req.query.endDate){
         let endDate=new Date(req.query.endDate)
        query.date = {$lte:endDate}
       }
+
+      if(req.query.sklLevel)
+      query.sklLevel= req.query.sklLevel
+//  ?endDate=yyyy-mm-dd
     // if sport is passes, use as filter
     if (req.query._id)
       query._id = req.query._id
